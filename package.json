@@ -14,8 +14,8 @@
     "start": "node ./server/server.js",
     "seed": "node ./seedDb.js",
     "docker": "npm run build:prod && npm run seed & npm run start",
-    "lint" : "eslint .",
-    "lint:fix" : "eslint . --fix"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "axios": "^0.18.0",
