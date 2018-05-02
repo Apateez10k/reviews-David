@@ -48,3 +48,4 @@ const clearDb = (cb) => {
 exports.findOne = findOne;
 exports.insertOne = insertOne;
 exports.clearDb = clearDb;
+exports.Model = Store;
