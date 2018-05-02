@@ -12,7 +12,8 @@ if (process.argv[3] === undefined || Number.isNaN(Number(process.argv[3]))) {
   process.exit();
 }
 
-const writeStream = fs.createWriteStream(path.join(__dirname, process.argv[2]));
+const streamOptions = { highWaterMark: 64 * 1024 };
+const writeStream = fs.createWriteStream(path.join(__dirname, process.argv[2]), streamOptions);
 const genAmt = process.argv[3];
 const maxReviews = 10;
 
@@ -68,10 +69,6 @@ let canWrite = true;
 
 const writeInChunks = () => {
   while (i < genAmt && canWrite) {
-    process.stdout.clearLine();
-    process.stdout.cursorTo(0);
-    process.stdout.write(`Inserting ${i + 1}...`);
-
     const fakeStore = createFakeStore(i);
     canWrite = writeStream.write(JSON.stringify(fakeStore, null, 2));
     i += 1;
@@ -80,9 +77,12 @@ const writeInChunks = () => {
     canWrite = true;
     writeStream.once('drain', writeInChunks);
   } else {
-    process.stdout.write('\nGenerating complete!\n');
+    console.log('Generating complete!');
+    console.timeEnd('Generation Time');
   }
 };
 
+console.time('Generation Time');
+console.log('Starting...');
 writeInChunks();
 
