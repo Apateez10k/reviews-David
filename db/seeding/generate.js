@@ -68,16 +68,21 @@ const createFakeStore = (id) => {
 let i = 0;
 let canWrite = true;
 
+let fakeStore = createFakeStore(i);
+writeStream.write(`[${JSON.stringify(fakeStore)}`);
+
 const writeInChunks = () => {
   while (i < genAmt && canWrite) {
-    const fakeStore = createFakeStore(i);
-    canWrite = writeStream.write(JSON.stringify(fakeStore));
+    fakeStore = createFakeStore(i);
+    canWrite = writeStream.write(`,${JSON.stringify(fakeStore)}`);
     i += 1;
   }
   if (i < genAmt) {
     canWrite = true;
     writeStream.once('drain', writeInChunks);
   } else {
+    writeStream.write(']');
+    writeStream.end();
     console.log('Generating complete!');
     console.timeEnd('Generation Time');
   }
