@@ -15,3 +15,6 @@ public/app.js
  
 # Misc
 db/seeding/*.json 
+
+# Vim
+*.swp
