@@ -70,6 +70,7 @@ let canWrite = true;
 
 let fakeStore = createFakeStore(i);
 writeStream.write(`[${JSON.stringify(fakeStore)}`);
+i += 1;
 
 const writeInChunks = () => {
   while (i < genAmt && canWrite) {
