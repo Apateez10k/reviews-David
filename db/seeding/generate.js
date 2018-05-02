@@ -1,17 +1,18 @@
 /* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] no-console: 0 */
 const fs = require('fs');
+const path = require('path');
 const faker = require('faker');
 
 if (process.argv[2] === undefined) {
   console.log('File name not specified. Exiting...');
   process.exit();
 }
-
 if (process.argv[3] === undefined || Number.isNaN(process.argv[3])) {
   console.log('Object quantity not specified. Exiting...');
   process.exit();
 }
 
+const writeStream = fs.createWriteStream(path.join(__dirname, process.argv[2]));
 const genAmt = process.argv[3];
 const maxReviews = 10;
 
@@ -35,14 +36,9 @@ const getRandRelTime = () => {
   return text[getRandNum(0, text.length - 1)];
 };
 
-const fakeData = [];
-for (let i = 0; i < genAmt; i++) {
-  process.stdout.clearLine();
-  process.stdout.cursorTo(0);
-  process.stdout.write(`Inserting ${i + 1}...`);
-
+const createFakeStore = (id) => {
   const fakeStore = {
-    place_id: i,
+    place_id: id,
     name: faker.company.companyName(),
     price_level: getRandNum(1, 4),
     neighborhood: faker.address.city(),
@@ -53,7 +49,7 @@ for (let i = 0; i < genAmt; i++) {
   };
 
   const reviewCount = getRandNum(1, maxReviews);
-  for (let j = 0; j < reviewCount; j++) {
+  for (let i = 0; i < reviewCount; i++) {
     const fakeReview = {
       author_name: faker.name.findName(),
       profile_photo_url: faker.internet.avatar(),
@@ -64,11 +60,28 @@ for (let i = 0; i < genAmt; i++) {
     fakeStore.reviews.push(fakeReview);
   }
 
-  fakeData.push(fakeStore);
-}
+  return fakeStore;
+};
 
-fs.writeFile(process.argv[2], JSON.stringify(fakeData, null, 2), (err) => {
-  if (err) throw err;
-  console.log('\nFile generation successful!');
-});
+let i = 0;
+let canWrite = true;
+
+const writeInChunks = () => {
+  while (i < genAmt && canWrite) {
+    process.stdout.clearLine();
+    process.stdout.cursorTo(0);
+    process.stdout.write(`Inserting ${i + 1}...`);
+
+    const fakeStore = createFakeStore(i);
+    canWrite = writeStream.write(JSON.stringify(fakeStore, null, 2));
+    i += 1;
+  }
+  if (i < genAmt) {
+    writeStream.once('drain', writeInChunks);
+  } else {
+    process.stdout.write('\nGenerating complete!\n')
+  }
+};
+
+writeInChunks();
 
