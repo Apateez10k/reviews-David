@@ -7,7 +7,7 @@ if (process.argv[2] === undefined) {
   console.log('File name not specified. Exiting...');
   process.exit();
 }
-if (process.argv[3] === undefined || Number.isNaN(process.argv[3])) {
+if (process.argv[3] === undefined || Number.isNaN(Number(process.argv[3]))) {
   console.log('Object quantity not specified. Exiting...');
   process.exit();
 }
@@ -77,9 +77,10 @@ const writeInChunks = () => {
     i += 1;
   }
   if (i < genAmt) {
+    canWrite = true;
     writeStream.once('drain', writeInChunks);
   } else {
-    process.stdout.write('\nGenerating complete!\n')
+    process.stdout.write('\nGenerating complete!\n');
   }
 };
 
