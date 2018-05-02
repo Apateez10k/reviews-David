@@ -15,7 +15,8 @@ if (process.argv[3] === undefined || Number.isNaN(Number(process.argv[3]))) {
 const streamOptions = { highWaterMark: 64 * 1024 };
 const writeStream = fs.createWriteStream(path.join(__dirname, process.argv[2]), streamOptions);
 const genAmt = process.argv[3];
-const maxReviews = 10;
+const minReviews = 1;
+const maxReviews = 5;
 
 const getRandNum = (min, max) => Math.floor(Math.random() * Math.floor((max + 1) - min)) + min;
 const getRandRelTime = () => {
@@ -49,14 +50,14 @@ const createFakeStore = (id) => {
     rating: getRandNum(0, 50) / 10,
   };
 
-  const reviewCount = getRandNum(1, maxReviews);
+  const reviewCount = getRandNum(minReviews, maxReviews);
   for (let i = 0; i < reviewCount; i++) {
     const fakeReview = {
       author_name: faker.name.findName(),
       profile_photo_url: faker.internet.avatar(),
       rating: getRandNum(1, 5),
       relative_time_description: getRandRelTime(),
-      text: faker.lorem.paragraphs(),
+      text: faker.lorem.paragraph(),
     };
     fakeStore.reviews.push(fakeReview);
   }
