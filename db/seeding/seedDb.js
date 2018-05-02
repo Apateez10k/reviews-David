@@ -1,5 +1,5 @@
 const fullList = require('./195-Zagat-AllData.json');
-const Stores = require('./db/models/store.js');
+const Stores = require('../models/store.js');
 const mongoose = require('mongoose');
 
 const seedDb = (array) => {

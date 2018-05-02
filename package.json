@@ -12,7 +12,7 @@
     "build": "webpack -d --watch",
     "build:prod": "webpack -p",
     "start": "node ./server/server.js",
-    "seed": "node ./seedDb.js",
+    "seed": "node ./db/seeding/seedDb.js",
     "docker": "npm run build:prod && npm run seed & npm run start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
@@ -26,6 +26,7 @@
     "babel-preset-react": "^6.24.1",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "faker": "^4.1.0",
     "moment": "^2.22.0",
     "mongoose": "^5.0.14",
     "morgan": "^1.9.0",
@@ -41,16 +42,16 @@
     "webpack": "^3.11.0"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.11.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.7.0",
     "css-loader": "^0.28.11",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.3",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
     "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
     "jest": "^22.4.3",
     "jest-enzyme": "^6.0.0",
     "style-loader": "^0.21.0"
