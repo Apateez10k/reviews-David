@@ -30,7 +30,7 @@ app.get('/api/restaurants/:id', (req, res) => {
   // console.log('place_id IS :', place_id)
   Stores.findOne(place_id)
     .then((data) => {
-      // console.log('data ', data);
+      console.log('data ', data);
       res.send(data[0]);
     });
 });
