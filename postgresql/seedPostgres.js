@@ -21,8 +21,10 @@ const client = new Client({
 client.connect();
 
 let queries = 0;
+let insertCount = 0;
 const handleQueries = () => {
   queries -= 1;
+  insertCount += 1;
   if (queries <= 0) {
     console.log('Completed!');
     console.timeEnd('Insertion time');
@@ -57,6 +59,8 @@ const prepareQueries = (store) => {
       .then(handleQueries);
   });
 };
+
+setInterval(() => console.log(`Inserted ${insertCount} documents...`), 5000);
 
 readStream
   .pipe(JSONStream.parse('*'))
