@@ -43,7 +43,11 @@ const prepareQueries = (store) => {
   ];
   queries += 1;
   client.query(storeTxt, storeValues)
-    .then(handleQueries);
+    .then(handleQueries)
+    .catch((err) => {
+      console.error(err);
+      process.exit(1);
+    });
 
   store.reviews.forEach((review) => {
     const reviewValues = [
@@ -56,7 +60,11 @@ const prepareQueries = (store) => {
     ];
     queries += 1;
     client.query(reviewTxt, reviewValues)
-      .then(handleQueries);
+      .then(handleQueries)
+      .catch((err) => {
+        console.error(err);
+        process.exit(1);
+      });
   });
 };
 
