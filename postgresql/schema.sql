@@ -1,17 +1,17 @@
 CREATE TABLE stores (
   place_id SERIAL PRIMARY KEY,
-  name VARCHAR(30),
+  name VARCHAR(50),
   price_level SMALLINT,
-  neighborhood VARCHAR(30),
-  city VARCHAR(30),
-  street VARCHAR(30),
+  neighborhood VARCHAR(50),
+  city VARCHAR(50),
+  street VARCHAR(50),
   rating SMALLINT
 );
 
 CREATE TABLE reviews (
   id SERIAL PRIMARY KEY,
   stores_id integer,
-  author_name VARCHAR(30),
+  author_name VARCHAR(50),
   profile_photo_url VARCHAR(100),
   rating SMALLINT,
   relative_time_description VARCHAR(20),
