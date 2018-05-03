@@ -58,6 +58,7 @@ const prepareQueries = (store) => {
       review.relative_time_description,
       review.text,
     ];
+
     queries += 1;
     client.query(reviewTxt, reviewValues)
       .then(handleQueries)
