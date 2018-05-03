@@ -1,3 +1,4 @@
+/* eslint no-console: 0 */
 const fs = require('fs');
 const path = require('path');
 const JSONStream = require('JSONStream');
@@ -8,6 +9,9 @@ if (process.argv[2] === undefined) {
   process.exit();
 }
 
+console.log('Inserting...');
+console.time('Insertion time');
+
 const readStream = fs.createReadStream(path.join(__dirname, process.argv[2]));
 const storeTxt = 'INSERT INTO stores(name, price_level, neighborhood, city, street, rating) VALUES($1, $2, $3, $4, $5, $6)';
 const reviewTxt = 'INSERT INTO reviews(stores_id, author_name, profile_photo_url, rating, relative_time_description, text) VALUES($1, $2, $3, $4, $5, $6)';
@@ -16,6 +20,16 @@ const client = new Client({
 });
 client.connect();
 
+let queries = 0;
+const handleQueries = () => {
+  queries -= 1;
+  if (queries <= 0) {
+    console.log('Completed!');
+    console.timeEnd('Insertion time');
+    client.end();
+  }
+};
+
 const prepareQueries = (store) => {
   const storeValues = [
     store.name,
@@ -23,9 +37,11 @@ const prepareQueries = (store) => {
     store.neighborhood,
     store.city,
     store.street,
-    store.rating,
+    Math.round(store.rating),
   ];
-  client.query(storeTxt, storeValues);
+  queries += 1;
+  client.query(storeTxt, storeValues)
+    .then(handleQueries);
 
   store.reviews.forEach((review) => {
     const reviewValues = [
@@ -36,10 +52,13 @@ const prepareQueries = (store) => {
       review.relative_time_description,
       review.text,
     ];
-    client.query(reviewTxt, reviewValues);
+    queries += 1;
+    client.query(reviewTxt, reviewValues)
+      .then(handleQueries);
   });
 };
 
 readStream
   .pipe(JSONStream.parse('*'))
   .on('data', data => prepareQueries(data));
+
