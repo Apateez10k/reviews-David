@@ -8,11 +8,13 @@ if (process.argv[2] === undefined) {
   process.exit();
 }
 
-const client = new Client();
 const readStream = fs.createReadStream(path.join(__dirname, process.argv[2]));
-
 const storeTxt = 'INSERT INTO stores(name, price_level, neighborhood, city, street, rating) VALUES($1, $2, $3, $4, $5, $6)';
 const reviewTxt = 'INSERT INTO reviews(stores_id, author_name, profile_photo_url, rating, relative_time_description, text) VALUES($1, $2, $3, $4, $5, $6)';
+const client = new Client({
+  database: 'stores',
+});
+client.connect();
 
 const prepareQueries = (store) => {
   const storeValues = [
@@ -23,9 +25,7 @@ const prepareQueries = (store) => {
     store.street,
     store.rating,
   ];
-  client.query(storeTxt, storeValues)
-    .then(res => console.log(res.rows[0]))
-    .catch(e => console.error(e.stack));
+  client.query(storeTxt, storeValues);
 
   store.reviews.forEach((review) => {
     const reviewValues = [
@@ -36,9 +36,7 @@ const prepareQueries = (store) => {
       review.relative_time_description,
       review.text,
     ];
-    client.query(reviewTxt, reviewValues)
-      .then(res => console.log(res.rows[0]))
-      .catch(e => console.error(e.stack));
+    client.query(reviewTxt, reviewValues);
   });
 };
 
