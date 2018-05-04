@@ -23,9 +23,7 @@ const storeSchema = mongoose.Schema({
   name: String,
   price_level: Number,
   neighborhood: String,
-  reviews: [
-    [],
-  ],
+  reviews: [],
   city: String,
   street: String,
   rating: Number,
@@ -33,7 +31,7 @@ const storeSchema = mongoose.Schema({
 
 const Store = mongoose.model('Store', storeSchema);
 
-const findOne = id => Store.find({ place_id: id });
+const findOne = id => Store.findOne({ place_id: id });
 const insertOne = (store, callback) => {
   console.log('NEW STORE', store);
   Store.create(store, callback);

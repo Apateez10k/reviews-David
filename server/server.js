@@ -4,7 +4,7 @@ const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3003;
-const Stores = require('./../db/models/store.js');
+const Stores = require('./../db/models/storePostgres.js');
 
 const bodyParser = require('body-parser');
 
@@ -26,15 +26,13 @@ app.get('/restaurants/:id', (req, res) => {
 });
 
 app.get('/api/restaurants/:id', (req, res) => {
-  const place_id = req.params.id;
-  // console.log('place_id IS :', place_id)
-  Stores.findOne(place_id)
+  Stores.findOne(req.params.id)
     .then((data) => {
-      console.log('data ', data);
-      res.send(data[0]);
+      console.log(data);
+      res.send(data);
     });
 });
 
 app.listen(port, () => {
-  // console.log(`server running at PORT: ${port}`);
+  console.log(`server running at PORT: ${port}`);
 });
