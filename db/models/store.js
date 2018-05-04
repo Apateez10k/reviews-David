@@ -1,3 +1,4 @@
+/* eslint no-console: 0 */
 const mongoose = require('mongoose');
 
 const mongoUrlDocker = 'mongodb://database/apateez-reviews';
@@ -16,7 +17,7 @@ mongoose.connection.on('error', (err) => {
 
 const storeSchema = mongoose.Schema({
   place_id: {
-    type: String,
+    type: Number,
     unique: true,
   },
   name: String,
@@ -32,9 +33,7 @@ const storeSchema = mongoose.Schema({
 
 const Store = mongoose.model('Store', storeSchema);
 
-const findOne = (id, callback) =>
-  // console.log('find one db triggered with ', id);
-  Store.find({ place_id: id }, callback);
+const findOne = id => Store.find({ place_id: id });
 const insertOne = (store, callback) => {
   console.log('NEW STORE', store);
   Store.create(store, callback);
@@ -44,8 +43,10 @@ const clearDb = (cb) => {
   Store.remove({}, cb);
 };
 
+const disconnect = () => mongoose.disconnect();
 
 exports.findOne = findOne;
 exports.insertOne = insertOne;
 exports.clearDb = clearDb;
 exports.Model = Store;
+exports.disconnect = disconnect;
