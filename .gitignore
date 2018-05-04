@@ -15,7 +15,7 @@ public/app.js
  
 # Misc
 db/seeding/*.json 
-postgresql/*.sh
+db/postgresql/*.csv
 
 # Vim
 *.swp
