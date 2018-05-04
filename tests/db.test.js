@@ -34,10 +34,10 @@ test('the data[0].reviews is an array', () => {
   });
 });
 
-test('the data[0].reviews has at least 5 reviews', () => {
+test('the data[0].reviews has at least 1 reviews', () => {
   expect.assertions(1);
   return db.findOne(place_id).then(data => {
-    expect(data[0].reviews.length).toBeGreaterThanOrEqual(5);
+    expect(data[0].reviews.length).toBeGreaterThanOrEqual(1);
   });
 });
 
