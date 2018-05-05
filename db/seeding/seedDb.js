@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const seedDb = (array) => {
   let counter = 0;
 
-  var createList = () => {
+  const createList = () => {
     const obj = {
       place_id: array[counter].place_id,
       name: array[counter].name,
@@ -17,17 +17,16 @@ const seedDb = (array) => {
       street: array[counter].street,
     };
 
-
-    Stores.insertOne(obj, (err, content) => {
+    Stores.insertOne(obj, (err) => {
       if (err) {
-        return err;
+        throw err;
       }
-      counter++;
+
+      counter += 1;
       if (counter < array.length) {
         createList();
       } else {
         mongoose.disconnect();
-        return counter;
       }
     });
   };
@@ -36,3 +35,4 @@ const seedDb = (array) => {
 };
 
 seedDb(fullList);
+

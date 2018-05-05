@@ -29,4 +29,3 @@ CREATE TABLE stores_denormal (
   rating REAL
 );
 
-
