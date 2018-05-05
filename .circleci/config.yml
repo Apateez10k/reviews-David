@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:7.10
+        environment:
           PGHOST: 127.0.0.1
           PGDATABASE: circle_test
           PGUSER: circleci-demo-go
