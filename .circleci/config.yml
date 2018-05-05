@@ -1,0 +1,37 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:7.10
+        environment:
+          PGHOST: 127.0.0.1
+          PGDATABASE: circle_test
+          PGUSER: circleci-demo-go
+      - image: circleci/mongo:3.4.4
+      - image: circleci/postgres:9.6-alpine
+        environment:
+          POSTGRES_USER: circleci-demo-go
+          POSTGRES_DB: circle_test
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+
+      - run: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run: sudo apt-get update && sudo apt-get install postgresql-client        
+      - run: psql circle_test < db/postgresql/schema.sql
+      - run: npm run seed-test:mongo
+      - run: npm run seed-test:pg
+      - run: npm test
