@@ -3,7 +3,7 @@ import Enzyme from 'enzyme';
 import {shallow, mount, render} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
-import Review from '../../client/components/Review.jsx'
+import Review from '../client/components/Review.jsx'
 
 Enzyme.configure({ adapter: new Adapter() });
 

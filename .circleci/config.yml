@@ -25,7 +25,8 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-        
+
+      - run: sudo apt-get install postgresql-client        
       - run: npm run seed-test:mongo
       - run: npm run seed-test:pg
       - run: npm test

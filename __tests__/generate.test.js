@@ -4,7 +4,7 @@ const generate = require('../db/seeding/generateCore.js');
 
 const testFilePath = path.join(__dirname, 'test.json');
 
-beforeAll(done => generate('../../tests/test.json', 10, done));
+beforeAll(done => generate('../../__tests__/test.json', 10, done));
 
 test('the file is created', (done) => {
   fs.readFile(testFilePath, (err, data) => {
