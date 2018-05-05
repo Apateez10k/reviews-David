@@ -5,7 +5,7 @@ const db = require('./../db/models/storeMongo.js');
 // 2. Mongodb must be started by using mongod from terminal
 // 3. use database 'apateez'
 
-var place_id = 0;
+var place_id = 2;
 
 test('the data has a place_id', () => {
   expect.assertions(1);

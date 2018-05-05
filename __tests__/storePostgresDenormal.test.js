@@ -1,6 +1,6 @@
 const db = require('../db/models/storePostgresDenormal.js');
 
-const id = 0;
+const id = 2;
 
 test('the data has a place_id', () => {
   expect.assertions(1);
