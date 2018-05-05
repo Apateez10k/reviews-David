@@ -9,3 +9,4 @@ const findOne = id => (
 );
 
 exports.findOne = findOne;
+exports.client = client;

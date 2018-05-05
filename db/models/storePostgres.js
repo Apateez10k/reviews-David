@@ -13,10 +13,9 @@ const findOne = (id) => {
     .then((results) => {
       const sendObj = results[0];
       [, sendObj.reviews] = results;
-      console.log(sendObj);
       return sendObj;
     });
 };
 
 exports.findOne = findOne;
-
+exports.client = client;
