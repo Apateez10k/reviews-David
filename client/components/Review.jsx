@@ -61,5 +61,11 @@ export default class Review extends React.Component {
 }
 
 Review.propTypes = {
-  review: PropTypes.element.isRequired,
+  review: PropTypes.shape({
+    profile_photo_url: PropTypes.string,
+    author_name: PropTypes.string,
+    relative_time_description: PropTypes.string,
+    rating: PropTypes.number,
+  }).isRequired,
 };
+

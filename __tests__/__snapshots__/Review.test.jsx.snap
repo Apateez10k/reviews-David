@@ -8,20 +8,29 @@ exports[`Review should render correctly 1`] = `
     className="review-profile-pic"
   >
     <img
+      alt="reviewer profile"
       height={70}
+      src="https://lh5.googleusercontent.com/-Ke1fzBZDHB4/AAAAAAAAAAI/AAAAAAAAjWI/mygiCr_mb3c/s128-c0x00000000-cc-rp-mo-ba2/photo.jpg"
       width={70}
     />
   </div>
   <div
     className="review-column"
     onClick={[Function]}
+    onKeyDown={[Function]}
+    role="button"
+    tabIndex="0"
   >
     <div
       className="review-column-name"
-    />
+    >
+      Craig Francis
+    </div>
     <div
       className="review-column-date"
-    />
+    >
+      a month ago
+    </div>
     <div
       className="reviews-details-ratings-stars"
     >
@@ -29,7 +38,7 @@ exports[`Review should render correctly 1`] = `
         className="reviews-details-ratings-stars-top"
         style={
           Object {
-            "width": "NaN%",
+            "width": "100%",
           }
         }
       >
@@ -78,7 +87,11 @@ exports[`Review should render correctly 1`] = `
         component="div"
         ellipsis="... See More"
         maxLine="3"
-        text="undefined"
+        text="Beautiful hotel, we stayed for a few nights before our wedding (even though we are San Francisco locals) and it was a beautiful experience. The staff were so nice and thoughtful, the suite was large and spacious, an extremely comfortable bed and a dink g area big enough it have the family around for a meals to celebrate together. The staff are very attentive and the hotel feels very secure. 
+
+The Redwood Room was great to gather friends and have drinks, stylish and has a great vibe. 
+
+Overall we can’t recommend this place enough!"
         trimRight={true}
       />
     </div>
