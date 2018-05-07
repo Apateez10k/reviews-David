@@ -1,0 +1,25 @@
+config:
+  target: "http://localhost:3003"
+  phases:
+    - duration: 10
+      arrivalRate: 10
+    - duration: 10
+      arrivalRate: 20
+    - duration: 10
+      arrivalRate: 30
+  payload:
+    path: "./restaurants.csv"
+    fields:
+      - "place_id"
+scenarios:
+  - name: "Get and Post"
+    flow:
+      - get:
+          url: "/restaurants/"
+      - get:
+          url: "/api/restaurants/{{ place_id }}"
+      #- think: 3
+      #- post:
+          #url: "/cart"
+          #json:
+            #productId: "{{ id }}"

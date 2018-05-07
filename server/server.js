@@ -28,7 +28,6 @@ app.get('/restaurants/:id', (req, res) => {
 app.get('/api/restaurants/:id', (req, res) => {
   Stores.findOne(req.params.id)
     .then((data) => {
-      console.log(data);
       res.send(data);
     });
 });
