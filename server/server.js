@@ -1,12 +1,11 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
+const bodyParser = require('body-parser');
+const Stores = require('./../db/models/storePostgres.js');
 
 const app = express();
 const port = process.env.PORT || 3003;
-const Stores = require('./../db/models/storePostgres.js');
-
-const bodyParser = require('body-parser');
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -16,9 +15,7 @@ app.use((req, res, next) => {
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
-
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use('/restaurants', express.static(path.join(__dirname, '../public')));
 
 app.get('/restaurants/:id', (req, res) => {
@@ -27,9 +24,14 @@ app.get('/restaurants/:id', (req, res) => {
 
 app.get('/api/restaurants/:id', (req, res) => {
   Stores.findOne(req.params.id)
-    .then((data) => {
-      res.send(data);
-    });
+    .then(data => res.send(data))
+    .catch(() => res.sendStatus(404));
+});
+
+app.get('/api/restaurants/:id', (req, res) => {
+  Stores.insertOne(req.body)
+    .then(() => res.sendStatus(204))
+    .catch(() => res.sendStatus(400));
 });
 
 app.listen(port, () => {
