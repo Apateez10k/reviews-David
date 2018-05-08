@@ -29,7 +29,7 @@ app.get('/api/restaurants/:id', (req, res) => {
 });
 
 app.get('/api/restaurants/:id', (req, res) => {
-  Stores.insertOne(req.body)
+  Stores.insertReview(req.body)
     .then(() => res.sendStatus(204))
     .catch(() => res.sendStatus(400));
 });

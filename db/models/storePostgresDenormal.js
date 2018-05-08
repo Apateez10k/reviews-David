@@ -20,6 +20,6 @@ const insertReview = (review) => {
     });
 };
 
-exports.insertReview = insertReview;
 exports.findOne = findOne;
+exports.insertReview = insertReview;
 exports.client = client;
