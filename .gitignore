@@ -17,6 +17,7 @@ public/app.js
 db/seeding/*.json 
 db/postgresql/*.csv
 newrelic.js
+newrelic_agent.log
 
 # Vim
 *.swp

@@ -1,8 +1,9 @@
+const nr = require('newrelic');
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const bodyParser = require('body-parser');
-const Stores = require('./../db/models/storePostgres.js');
+const Stores = require('./../db/models/storePostgresDenormal.js');
 
 const app = express();
 const port = process.env.PORT || 3003;

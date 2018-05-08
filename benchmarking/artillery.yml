@@ -3,23 +3,25 @@ config:
   http:
     pool: 10
   phases:
-    - duration: 10
-      arrivalRate: 10
-    - duration: 10
-      arrivalRate: 20
-    - duration: 10
-      arrivalRate: 30
-  payload:
-    path: "./restaurants.csv"
-    fields:
-      - "place_id"
+    - duration: 60
+      arrivalRate: 100
+      rampTo: 500
+    - duration: 60
+      arrivalRate: 500
+      rampTo: 1000
+    - duration: 60
+      arrivalRate: 1000
+      rampTo: 1500
+  processor: "./artilleryHelper.js"
+
 scenarios:
   - name: "Get and Post"
     flow:
+      - function: "getRandNum"
       - get:
           url: "/restaurants/"
       - get:
-          url: "/api/restaurants/{{ place_id }}"
+          url: "/api/restaurants/{{ randNum }}"
       #- think: 3
       #- post:
           #url: "/cart"
