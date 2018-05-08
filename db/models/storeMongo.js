@@ -32,10 +32,19 @@ const storeSchema = mongoose.Schema({
 const Store = mongoose.model('Store', storeSchema);
 
 const findOne = id => Store.findOne({ place_id: id });
+
 const insertOne = (store, callback) => {
   console.log('NEW STORE', store);
   Store.create(store, callback);
 };
+
+const insertReview = review => (
+  Store.update({
+    place_id: review.stores_id,
+  }, {
+    $push: { reviews: review },
+  })
+);
 
 const clearDb = (cb) => {
   Store.remove({}, cb);
@@ -45,6 +54,7 @@ const disconnect = () => mongoose.disconnect();
 
 exports.findOne = findOne;
 exports.insertOne = insertOne;
+exports.insertReview = insertReview;
 exports.clearDb = clearDb;
 exports.Model = Store;
 exports.disconnect = disconnect;
