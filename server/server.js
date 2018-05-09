@@ -26,13 +26,19 @@ app.get('/restaurants/:id', (req, res) => {
 app.get('/api/restaurants/:id', (req, res) => {
   Stores.findOne(req.params.id)
     .then(data => res.send(data))
-    .catch(() => res.sendStatus(404));
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(404);
+    });
 });
 
-app.get('/api/restaurants/:id', (req, res) => {
+app.post('/api/restaurants/:id', (req, res) => {
   Stores.insertReview(req.body)
     .then(() => res.sendStatus(204))
-    .catch(() => res.sendStatus(400));
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(404);
+    });
 });
 
 app.listen(port, () => {

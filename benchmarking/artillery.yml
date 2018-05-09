@@ -4,26 +4,31 @@ config:
     pool: 10
   phases:
     - duration: 60
-      arrivalRate: 100
-      rampTo: 500
-    - duration: 60
-      arrivalRate: 500
+      arrivalRate: 1
       rampTo: 1000
-    - duration: 60
-      arrivalRate: 1000
-      rampTo: 1500
   processor: "./artilleryHelper.js"
 
 scenarios:
-  - name: "Get and Post"
+  - name: "Get"
+    weight: 9
     flow:
       - function: "getRandNum"
       - get:
           url: "/restaurants/"
       - get:
           url: "/api/restaurants/{{ randNum }}"
-      #- think: 3
-      #- post:
-          #url: "/cart"
-          #json:
-            #productId: "{{ id }}"
+  - name: "Post"
+    weight: 1
+    flow:
+      - function: "getRandNum"
+      - get:
+          url: "/restaurants/"
+      - post:
+          url: "/api/restaurants/{{ randNum }}"
+          json:
+            stores_id: "{{ randNum }}"
+            author_name: "Spongebob Squarepants"
+            profile_photo_url: "https://s3.amazonaws.com/uifaces/faces/twitter/scottkclark/128.jpg"
+            rating: 4
+            relative_time_description: "3 days ago"
+            text: "Check check check it out! This is an example review because it is what it is!"
