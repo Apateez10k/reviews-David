@@ -31,7 +31,7 @@ const storeSchema = mongoose.Schema({
 
 const Store = mongoose.model('Store', storeSchema);
 
-const findOne = id => Store.findOne({ place_id: id });
+const findOne = id => Store.findOne({ place_id: id }).lean();
 
 const insertOne = (store, callback) => {
   console.log('NEW STORE', store);

@@ -1,12 +1,12 @@
-const { Client } = require('pg');
+const { Pool } = require('pg');
 
-const client = new Client();
-client.connect();
+const pool = new Pool();
+pool.connect();
 
 const findOne = (id) => {
-  const storePrms = client.query('SELECT * FROM stores WHERE place_id = $1', [id])
+  const storePrms = pool.query('SELECT * FROM stores WHERE place_id = $1', [id])
     .then(res => res.rows[0]);
-  const reviewsPrms = client.query('SELECT * FROM reviews WHERE stores_id = $1', [id])
+  const reviewsPrms = pool.query('SELECT * FROM reviews WHERE stores_id = $1', [id])
     .then(res => res.rows);
 
   return Promise.all([storePrms, reviewsPrms])
@@ -18,7 +18,7 @@ const findOne = (id) => {
 };
 
 const insertReview = review => (
-  client.query('INSERT INTO reviews (stores_id, author_name, profile_photo_url, rating, relative_time_description, text) VALUES ($1, $2, $3, $4, $5, $6)', [
+  pool.query('INSERT INTO reviews (stores_id, author_name, profile_photo_url, rating, relative_time_description, text) VALUES ($1, $2, $3, $4, $5, $6)', [
     review.stores_id,
     review.author_name,
     review.profile_photo_url,
@@ -30,4 +30,4 @@ const insertReview = review => (
 
 exports.findOne = findOne;
 exports.insertReview = insertReview;
-exports.client = client;
+exports.pool = pool;
