@@ -2,14 +2,13 @@
 
 Apateez Reviews Component
 
-> Project description
+> Displays a subset of store information and all reviews associated with the store
 
 ## Related Projects
 
-  - https://github.com/apateez/sidebar
-  - https://github.com/apateez/proxy-Oliver
-  - https://github.com/apateez/gallery
-  - https://github.com/apateez/nearby
+  - https://github.com/Apateez10k/proxy-David
+  - https://github.com/Apateez10k/gallery-Raymond
+  - https://github.com/Apateez10k/sidebar
 
 ## Table of Contents
 
@@ -19,19 +18,13 @@ Apateez Reviews Component
 
 ## Usage
 
-1) run 'npm run seed' to seed MongoDB with data from Google places API.
+1) run 'npm run seed' to seed MongoDB with 10M documents of randomly generated store data.
 2) run 'npm run build' to run webpack --watch
 3) run 'npm start' to start server on port 3003.
 
-
-
-
 ## Requirements
 
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
-
-- Node 6.13.0
-- etc
+- Node 8.11.1
 
 ## Development
 
@@ -40,6 +33,5 @@ An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 From within the root directory:
 
 ```sh
-npm install -g webpack
 npm install
 ```

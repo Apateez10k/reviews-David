@@ -12,11 +12,15 @@
     "build": "webpack -d --watch",
     "build:prod": "webpack -p",
     "start": "node ./server/server.js",
+    "seed": "node ./db/seeding/generate.js data.json 10000000 && mongoimport --db apateez-reviews --collection stores --jsonArray ./db/seeding/data.json && rm ./db/seeding/data.json",
     "seed-test:mongo": "node ./db/seeding/seedDb.js",
     "seed-test:pg": "psql -c \"\\copy stores FROM '$(pwd)/db/seeding/stores.csv' WITH DELIMITER ',' CSV HEADER;\" && psql -c \"\\copy reviews (stores_id,author_name,profile_photo_url,rating,relative_time_description,text) FROM '$(pwd)/db/seeding/reviews.csv' WITH DELIMITER ',' CSV HEADER;\" && psql -c \"\\copy stores_denormal FROM '$(pwd)/db/seeding/storesDenormal.csv' WITH DELIMITER ',' CSV HEADER;\"",
     "docker": "npm run build:prod && npm run seed & npm run start",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "stress": "wrk -d3m -t4 -c100 -s ./benchmarking/getpost.lua --timeout 2s http://localhost:3003/",
+    "stress:get": "wrk -d3m -t4 -c100 -s ./benchmarking/get.lua --timeout 2s http://localhost:3003/",
+    "stress:post": "wrk -d3m -t4 -c100 -s ./benchmarking/post.lua --timeout 2s http://localhost:3003/"
   },
   "dependencies": {
     "JSONStream": "^1.3.2",
@@ -32,6 +36,7 @@
     "moment": "^2.22.0",
     "mongoose": "^5.0.14",
     "morgan": "^1.9.0",
+    "newrelic": "^4.1.0",
     "pg": "^7.4.1",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",

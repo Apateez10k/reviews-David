@@ -31,6 +31,6 @@ test('the data.rating exists', () => {
 });
 
 afterAll(() => {
-  db.client.end();
+  db.pool.end();
 });
 
