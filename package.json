@@ -13,6 +13,7 @@
     "build:prod": "webpack -p",
     "start": "node ./server/server.js",
     "seed": "node ./db/seeding/generate.js data.json 10000000 && mongoimport --db apateez-reviews --collection stores --jsonArray ./db/seeding/data.json && rm ./db/seeding/data.json",
+    "seed:docker": "node ./db/seeding/generate.js data.json 10000000 && mongoimport --host database --db apateez-reviews --collection stores --jsonArray ./db/seeding/data.json && rm ./db/seeding/data.json",
     "seed-test:mongo": "node ./db/seeding/seedDb.js",
     "seed-test:pg": "psql -c \"\\copy stores FROM '$(pwd)/db/seeding/stores.csv' WITH DELIMITER ',' CSV HEADER;\" && psql -c \"\\copy reviews (stores_id,author_name,profile_photo_url,rating,relative_time_description,text) FROM '$(pwd)/db/seeding/reviews.csv' WITH DELIMITER ',' CSV HEADER;\" && psql -c \"\\copy stores_denormal FROM '$(pwd)/db/seeding/storesDenormal.csv' WITH DELIMITER ',' CSV HEADER;\"",
     "docker": "npm run build:prod && npm run seed & npm run start",
