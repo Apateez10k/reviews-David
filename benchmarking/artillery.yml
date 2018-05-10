@@ -6,6 +6,8 @@ config:
     - duration: 60
       arrivalRate: 1
       rampTo: 1000
+    - duration: 60
+      arrivalRate: 1000
   processor: "./artilleryHelper.js"
 
 scenarios:
@@ -14,15 +16,11 @@ scenarios:
     flow:
       - function: "getRandNum"
       - get:
-          url: "/restaurants/"
-      - get:
           url: "/api/restaurants/{{ randNum }}"
   - name: "Post"
     weight: 1
     flow:
       - function: "getRandNum"
-      - get:
-          url: "/restaurants/"
       - post:
           url: "/api/restaurants/{{ randNum }}"
           json:
