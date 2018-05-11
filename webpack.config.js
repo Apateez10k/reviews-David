@@ -1,5 +1,6 @@
-const webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var SRC_DIR = path.join(__dirname, '/client');
 var DIST_DIR = path.join(__dirname, '/public');
 
@@ -13,7 +14,7 @@ module.exports = {
   context: __dirname + '/client',
   entry: './index.jsx',
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
         include : SRC_DIR,
@@ -25,12 +26,16 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader','css-loader']
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader"
+        ]
       }
     ],
   },
   output: {
     path: __dirname + '/public',
     filename: 'app.js',
-  }
+    libraryTarget: "commonjs"
+  },
 };
