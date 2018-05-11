@@ -6,7 +6,8 @@ coverage/
 
 ## Compiled files ##
 public/transpiled
-public/app.js
+public/client.js
+public/server.js
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

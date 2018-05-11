@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var SRC_DIR = path.join(__dirname, '/client');
 var DIST_DIR = path.join(__dirname, '/public');
 
@@ -10,7 +9,7 @@ module.exports = [
       new webpack.DefinePlugin({
         BASE_URL: JSON.stringify('http://localhost:3003'),
         APIKEY: JSON.stringify('YOUR_API_KEY'),
-      })
+      }),
     ],
     context: __dirname + '/client',
     entry: './server.jsx',
@@ -27,10 +26,7 @@ module.exports = [
         },
         {
           test: /\.css$/,
-          use: [
-            MiniCssExtractPlugin.loader,
-            "css-loader"
-          ]
+          use: ['style-loader','css-loader']
         }
       ],
     },
@@ -45,7 +41,7 @@ module.exports = [
       new webpack.DefinePlugin({
         BASE_URL: JSON.stringify('http://localhost:3003'),
         APIKEY: JSON.stringify('YOUR_API_KEY'),
-      })
+      }),
     ],
     context: __dirname + '/client',
     entry: './client.jsx',
@@ -62,10 +58,7 @@ module.exports = [
         },
         {
           test: /\.css$/,
-          use: [
-            MiniCssExtractPlugin.loader,
-            "css-loader"
-          ]
+          use: ['style-loader','css-loader']
         }
       ],
     },
@@ -75,3 +68,4 @@ module.exports = [
     }
   },
 ];
+
