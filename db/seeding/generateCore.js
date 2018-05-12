@@ -86,6 +86,13 @@ const generateData = (filePath, amt, callback) => {
 
   console.time('Generation Time');
   console.log('Starting...');
+  const intervalId = setInterval(() => {
+    if (i >= genAmt) {
+      clearInterval(intervalId);
+    }
+    console.log(i, 'entries generated...');
+  }, 3000);
+
   writeInChunks();
 };
 
