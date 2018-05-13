@@ -91,7 +91,7 @@ const generateData = (filePath, amt, callback) => {
       clearInterval(intervalId);
     }
     console.log(i, 'entries generated...');
-  }, 3000);
+  }, 10000);
 
   writeInChunks();
 };
