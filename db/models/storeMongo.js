@@ -12,7 +12,11 @@ mongoose.connection.on('connected', () => {
 
 mongoose.connection.on('error', (err) => {
   console.log(`Mongoose default connection error: ${err}`);
-  mongoose.connect(mongoUrlDocker);
+  mongoose.connect(mongoUrlDocker, {
+    user: process.env.MONGO_INITDB_ROOT_USERNAME,
+    pass: process.env.MONGO_INITDB_ROOT_PASSWORD,
+    auth: { authdb: 'admin' },
+  });
 });
 
 const storeSchema = mongoose.Schema({
