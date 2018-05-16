@@ -19,8 +19,8 @@
     "docker": "npm run build:prod && npm run start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "stress": "wrk -d3m -t4 -c100 -s ./benchmarking/getpost.lua --timeout 2s http://ec2-52-53-194-112.us-west-1.compute.amazonaws.com/",
-    "stress:get": "wrk -d3m -t4 -c100 -s ./benchmarking/get.lua --timeout 2s http://ec2-52-53-194-112.us-west-1.compute.amazonaws.com/",
+    "stress": "wrk -d3m -t4 -c100 -s ./benchmarking/getpost.lua --timeout 2s http://ec2-13-57-23-208.us-west-1.compute.amazonaws.com/",
+    "stress:get": "wrk -d3m -t4 -c100 -s ./benchmarking/get.lua --timeout 2s http://ec2-13-57-23-208.us-west-1.compute.amazonaws.com/",
     "stress:post": "wrk -d3m -t4 -c100 -s ./benchmarking/post.lua --timeout 2s http://ec2-52-53-194-112.us-west-1.compute.amazonaws.com/"
   },
   "dependencies": {
