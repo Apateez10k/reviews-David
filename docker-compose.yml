@@ -7,6 +7,15 @@ services:
       - 'database'
     ports:
       - '80:3003'
+    environment:
+      - NR_LICENSE=
+      - MONGO_INITDB_ROOT_USERNAME=
+      - MONGO_INITDB_ROOT_PASSWORD=
 
   database:
     image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=
+      - MONGO_INITDB_ROOT_PASSWORD=
+    ports:
+      - '27017:27017'
