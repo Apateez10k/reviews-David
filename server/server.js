@@ -1,14 +1,16 @@
 require('newrelic');
-const express = require('express');
+const fs = require('fs');
+const fastify = require('fastify');
 const morgan = require('morgan');
 const path = require('path');
+const serveStatic = require('serve-static');
 const bodyParser = require('body-parser');
 const Stores = require('./../db/models/storeMongo.js');
 
-const app = express();
+const app = fastify();
 const port = process.env.PORT || 3003;
 
-app.use((req, res, next) => {
+app.addHook('preHandler', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
@@ -17,10 +19,11 @@ app.use((req, res, next) => {
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/restaurants', express.static(path.join(__dirname, '../public')));
+app.use('/restaurants', serveStatic(path.join(__dirname, '../public')));
 
 app.get('/restaurants/:id', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+  const stream = fs.createReadStream(path.join(__dirname, '../public/index.html'));
+  res.type('text.html').send(stream);
 });
 
 app.get('/api/restaurants/:id', (req, res) => {

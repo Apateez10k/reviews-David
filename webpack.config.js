@@ -7,7 +7,7 @@ module.exports = [
   {
     plugins: [
       new webpack.DefinePlugin({
-        BASE_URL: JSON.stringify('http://ec2-52-53-194-112.us-west-1.compute.amazonaws.com'),
+        BASE_URL: JSON.stringify('http://ec2-13-57-23-208.us-west-1.compute.amazonaws.com'),
         APIKEY: JSON.stringify('YOUR_API_KEY'),
       }),
     ],
@@ -35,7 +35,7 @@ module.exports = [
   {
     plugins: [
       new webpack.DefinePlugin({
-        BASE_URL: JSON.stringify('http://ec2-52-53-194-112.us-west-1.compute.amazonaws.com'),
+        BASE_URL: JSON.stringify('http://ec2-13-57-23-208.us-west-1.compute.amazonaws.com'),
         APIKEY: JSON.stringify('YOUR_API_KEY'),
       }),
     ],
