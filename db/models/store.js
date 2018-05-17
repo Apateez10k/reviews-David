@@ -41,10 +41,16 @@ const Store = mongoose.model('Store', storeSchema);
 
 const findOne = id => (
   redisGet(id)
-    .catch(() => (
-      Store.findOne({ place_id: id }).lean()
-        .then(data => redisSet(id, data, 'EX', 10))
-    ))
+    .then((data) => {
+      if (data === null) {
+        return Store.findOne({ place_id: id }).lean()
+          .then((mongoData) => {
+            redisSet(id, JSON.stringify(mongoData), 'EX', 10);
+            return mongoData;
+          });
+      }
+      return JSON.parse(data);
+    })
 );
 
 const insertOne = (store, callback) => {
