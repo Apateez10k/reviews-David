@@ -1,18 +1,22 @@
 /* eslint no-console: 0 */
+const { promisify } = require('util');
 const mongoose = require('mongoose');
+const redis = require('redis');
 
-const mongoUrlDocker = 'mongodb://database/apateez-reviews';
-const mongoUrl = 'mongodb://localhost/apateez-reviews';
+const redisClient = redis.createClient();
+redisClient.on('ready', () => console.log('Redis connected...'));
 
-mongoose.connect(mongoUrl); // Try localhost first
+const redisGet = promisify(redisClient.get).bind(redisClient);
+const redisSet = promisify(redisClient.set).bind(redisClient);
 
-mongoose.connection.on('connected', () => {
-  console.log('Mongoose connection open');
-});
+const dockerUri = 'mongodb://database/apateez-reviews';
+const localUri = 'mongodb://localhost/apateez-reviews';
 
+mongoose.connect(localUri); // Try localhost first
+mongoose.connection.on('connected', () => console.log('Mongoose connection open'));
 mongoose.connection.on('error', (err) => {
   console.log(`Mongoose default connection error: ${err}`);
-  mongoose.connect(mongoUrlDocker, {
+  mongoose.connect(dockerUri, {
     user: process.env.MONGO_INITDB_ROOT_USERNAME,
     pass: process.env.MONGO_INITDB_ROOT_PASSWORD,
     auth: { authdb: 'admin' },
@@ -35,7 +39,13 @@ const storeSchema = mongoose.Schema({
 
 const Store = mongoose.model('Store', storeSchema);
 
-const findOne = id => Store.findOne({ place_id: id }).lean();
+const findOne = id => (
+  redisGet(id)
+    .catch(() => (
+      Store.findOne({ place_id: id }).lean()
+        .then(data => redisSet(id, data, 'EX', 10))
+    ))
+);
 
 const insertOne = (store, callback) => {
   console.log('NEW STORE', store);

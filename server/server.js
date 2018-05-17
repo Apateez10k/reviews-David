@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const path = require('path');
 const serveStatic = require('serve-static');
 const bodyParser = require('body-parser');
-const Stores = require('./../db/models/storeMongo.js');
+const Stores = require('./../db/models/store.js');
 
 const app = fastify();
 const port = process.env.PORT || 3003;
