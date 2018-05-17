@@ -1,3 +1,4 @@
 node_modules
 npm-debug.log
 worker.js
+db/seeding/data.json

@@ -49,7 +49,7 @@ const generateData = (filePath, amt, callback) => {
         profile_photo_url: faker.internet.avatar(),
         rating: getRandNum(1, 5),
         relative_time_description: getRandRelTime(),
-        text: faker.lorem.paragraph(),
+        text: faker.lorem.sentences(),
       };
       fakeStore.reviews.push(fakeReview);
     }
@@ -86,6 +86,13 @@ const generateData = (filePath, amt, callback) => {
 
   console.time('Generation Time');
   console.log('Starting...');
+  const intervalId = setInterval(() => {
+    if (i >= genAmt) {
+      clearInterval(intervalId);
+    }
+    console.log(i, 'entries generated...');
+  }, 10000);
+
   writeInChunks();
 };
 
