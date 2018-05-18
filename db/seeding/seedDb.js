@@ -27,6 +27,7 @@ const seedDb = (array) => {
         createList();
       } else {
         mongoose.disconnect();
+        Stores.redisClient.quit();
       }
     });
   };
