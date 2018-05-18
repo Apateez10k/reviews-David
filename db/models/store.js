@@ -3,8 +3,10 @@ const { promisify } = require('util');
 const mongoose = require('mongoose');
 const redis = require('redis');
 
-const dbUrl = process.env.DB_URL || 'localhost'
-const redisClient = redis.createClient({ host: dbUrl });
+const dbUrl = process.env.DB_URL || 'localhost';
+const redisUrl = process.env.RD_URL || 'localhost';
+
+const redisClient = redis.createClient({ host: redisUrl });
 redisClient.on('ready', () => console.log('Redis connected...'));
 
 const redisGet = promisify(redisClient.get).bind(redisClient);
