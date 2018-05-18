@@ -57,7 +57,6 @@ const findOne = id => (
 );
 
 const insertOne = (store, callback) => {
-  console.log('NEW STORE', store);
   Store.create(store, callback);
 };
 
@@ -81,3 +80,4 @@ exports.insertReview = insertReview;
 exports.clearDb = clearDb;
 exports.Model = Store;
 exports.disconnect = disconnect;
+exports.redisClient = redisClient;

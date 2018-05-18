@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const redis = require('redis');
 const db = require('./../db/models/store.js');
 // Notes:
 // 1. Data must be seeded into Mongodb by running npm run seed.
@@ -37,4 +38,5 @@ test('the data.rating exists', () => {
 
 afterAll(() => {
   mongoose.disconnect();
+  db.redisClient.quit();
 });
