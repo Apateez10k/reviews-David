@@ -3,16 +3,17 @@ const { promisify } = require('util');
 const mongoose = require('mongoose');
 const redis = require('redis');
 
-const redisClient = redis.createClient();
+const dbUrl = process.env.DB_URL || 'localhost'
+const redisClient = redis.createClient({ host: dbUrl });
 redisClient.on('ready', () => console.log('Redis connected...'));
 
 const redisGet = promisify(redisClient.get).bind(redisClient);
 const redisSet = promisify(redisClient.set).bind(redisClient);
 
 const dockerUri = 'mongodb://database/apateez-reviews';
-const localUri = 'mongodb://localhost/apateez-reviews';
+const localUri = `mongodb://${dbUrl}/apateez-reviews`;
 
-mongoose.connect(localUri); // Try localhost first
+mongoose.connect(localUri);
 mongoose.connection.on('connected', () => console.log('Mongoose connection open'));
 mongoose.connection.on('error', (err) => {
   console.log(`Mongoose default connection error: ${err}`);
